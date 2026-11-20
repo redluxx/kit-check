@@ -1,1 +1,6 @@
 .DS_Store
+# real user data never belongs here
+rules.json
+log.json
+!skills/kit-check/templates/rules.json
+!skills/kit-check/templates/log.json

@@ -26,7 +26,11 @@ mv = [market.get("metadata", {}).get("version")] + [p.get("version") for p in ma
 if any(x != v for x in mv): err(f"marketplace.json versions {mv} != plugin.json {v}")
 for p in market.get("plugins", []):
     if p.get("name") != plugin.get("name"): err(f"marketplace plugin name {p.get('name')!r} != {plugin.get('name')!r}")
-    if not (root / p.get("source", "")).is_dir(): err(f"marketplace source {p.get('source')!r} is not a directory")
+    src = p.get("source")
+    # users must get a vetted release, never the moving main branch
+    if not (isinstance(src, dict) and src.get("source") == "github" and src.get("repo") == "redluxx/kit-check"
+            and src.get("ref") == v):
+        err(f"marketplace source must be a github source pinned to ref {v}, got {src!r}")
 for k in ("name", "description", "repository"):
     if not plugin.get(k): err(f"plugin.json: missing {k}")
 
@@ -61,6 +65,16 @@ s = rules.get("settings", {})
 if set(s.get("session_offsets_c", {})) != set(s.get("session_aliases", {})):
     err("rules.json: session_offsets_c and session_aliases must have the same session types")
 if s.get("default_session") not in s.get("session_aliases", {}): err("rules.json: default_session is not a session type")
+
+# no personal location or user data in the shipped templates
+loc = s.get("default_location", {})
+if loc.get("name") or loc.get("lat") is not None or loc.get("lon") is not None: err("rules.json: default_location must be empty")
+if s.get("plan_source", {}).get("path"): err("rules.json: plan_source.path must be empty")
+if log.get("entries"): err("log.json: entries must be empty")
+PII = re.compile(r"[\w.+-]+@[\w-]+\.[\w.]+|/Users/|/home/|[A-Za-z]:\\\\Users|-?\d{1,3}\.\d{3,}")
+for rel in ("skills/kit-check/templates/rules.json", "skills/kit-check/templates/log.json"):
+    hit = PII.search((root / rel).read_text())
+    if hit: err(f"{rel}: looks like personal data: {hit.group()!r}")
 
 print("\n".join(errors) or "ok")
 sys.exit(bool(errors))

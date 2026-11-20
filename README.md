@@ -35,8 +35,10 @@ This needs a paid plan with code execution enabled. Rules and tuning only persis
 
 On first use, Claude offers to create the folder and asks for your default location:
 
+Claude asks whether to keep it in the current project (`./kit-check/`, easy to back up and resume) or your home folder (`~/kit-check/`, the default). A project folder takes priority when present.
+
 ```
-~/kit-check/
+kit-check/
 ├─ rules.json   # settings and rules: edit freely
 └─ log.json     # post-run feedback: Claude appends to it
 ```

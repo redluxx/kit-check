@@ -3,14 +3,14 @@
   "owner": { "name": "redluxx" },
   "metadata": {
     "description": "Running kit recommendations from the forecast, tuned to you.",
-    "version": "0.1.0"
+    "version": "0.2.0"
   },
   "plugins": [
     {
       "name": "kit-check",
-      "source": "./",
+      "source": { "source": "github", "repo": "redluxx/kit-check", "ref": "0.2.0" },
       "description": "What to wear for your run: hourly forecast + session type + your own rules, tuned from post-run feedback.",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "category": "productivity"
     }
   ]

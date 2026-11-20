@@ -10,7 +10,7 @@ A Claude Code plugin/skill with no code, build, lint or test tooling. The whole 
 
 - `.claude-plugin/plugin.json` and `marketplace.json`: plugin metadata (keep the version and repo URLs in sync).
 - `skills/kit-check/SKILL.md`: the skill. Sections are numbered: 0 storage, 1 inputs, 2 forecast (Open-Meteo via WebFetch), 3 run temperature, 4 default kit, 5 user rules, 6 feedback log and tuning.
-- `skills/kit-check/templates/rules.json` and `log.json`: copied to the user's `~/kit-check/` on first run.
+- `skills/kit-check/templates/rules.json` and `log.json`: copied to the user's `./kit-check/` (project) or `~/kit-check/` (home) on first run.
 
 ## Things to keep consistent
 
@@ -18,3 +18,8 @@ A Claude Code plugin/skill with no code, build, lint or test tooling. The whole 
 - User data must never be stored inside the skill or plugin folder, because plugin updates overwrite it.
 - Rules and the log stay in °C and mph. Unit conversion is for display only.
 - Skill instructions tell Claude to use WebFetch, not curl, for Open-Meteo calls.
+
+## Releasing
+
+- `marketplace.json` pins the plugin to the git tag `<version>`, so installs get vetted releases, not `main`. When bumping the version, change `ref` too, merge, then tag that commit (admin only). Until the tag exists, installs fail.
+- Enable the pre-commit hook after cloning: `git config core.hooksPath .githooks`. It runs `scripts/validate.py`, which also blocks personal data in the templates.

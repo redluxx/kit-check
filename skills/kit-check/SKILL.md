@@ -14,18 +14,19 @@ The user's data lives in a folder called `kit-check/` that holds two files:
 - `log.json`: post-run feedback entries (Claude appends to it)
 
 Find the folder:
-- **Claude Code**: `~/kit-check/`. Never store user data inside the skill or plugin folder, because updates overwrite it.
+- **Claude Code**: `./kit-check/` in the current project if it exists (project-based), else `~/kit-check/` (home-based). Never store user data inside the skill or plugin folder, because updates overwrite it.
 - **Chat linked to the desktop app**: look in the user's connected folders with the mcp__remote-devices__ tools.
 - **Neither available** (e.g. plain claude.ai): carry on with the built-in defaults, and ask for a location if none was given. Tell the user once that rules and tuning need Claude Code or a connected folder to persist.
 
 First run: if the folder doesn't exist but storage is available, offer to create it.
-1. Ask how to set the home location (IP lookup is the default if the user just says yes):
+1. In Claude Code, ask where to keep it: **project** (`./kit-check/`, easy to back up and resume with the project) or **home** (`~/kit-check/`, shared by every project; the default). Create it there. If it's in a git repo, mention that the user may want to commit or ignore it, since it holds their location.
+2. Ask how to set the home location (IP lookup is the default if the user just says yes):
    - **IP-based**: WebFetch `https://ipapi.co/json/` and use `city`, `country_name`, `latitude`, `longitude`. Show the result and let the user correct it. IP lookups can be off by a city or more, and wrong on a VPN.
    - **User specified**: `lat,lon` (use as given) or `town, country` (geocode it with the Open-Meteo geocoding API in section 1, using the resolved name, lat and lon, and show the match so the user can confirm it).
-2. Ask how times are written: 24-hour (default, "0900", "18:30") or 12-hour ("9am", "6:30pm"). Store it in `settings.time_format` (`"24h"` or `"12h"`). Either way, an explicit am/pm in a message is always honoured; with `24h`, a bare number like "9" or "0900" is 24-hour, and with `12h` ask if a bare hour is ambiguous.
-3. Ask where run plans live: Strava, Claude's memory, a local file or folder (get the path), or none. Store it in `settings.plan_source` as `{ "type": "strava|memory|file|none", "path": "" }`.
-4. Copy `templates/rules.json` and `templates/log.json` from this skill's folder.
-5. Store the location in `settings.default_location` as `name`, `lat`, `lon`. It is fixed from then on; never re-run IP discovery for later requests.
+3. Ask how times are written: 24-hour (default, "0900", "18:30") or 12-hour ("9am", "6:30pm"). Store it in `settings.time_format` (`"24h"` or `"12h"`). Either way, an explicit am/pm in a message is always honoured; with `24h`, a bare number like "9" or "0900" is 24-hour, and with `12h` ask if a bare hour is ambiguous.
+4. Ask where run plans live: Strava, Claude's memory, a local file or folder (get the path), or none. Store it in `settings.plan_source` as `{ "type": "strava|memory|file|none", "path": "" }`.
+5. Copy `templates/rules.json` and `templates/log.json` from this skill's folder.
+6. Store the location in `settings.default_location` as `name`, `lat`, `lon`. It is fixed from then on; never re-run IP discovery for later requests.
 
 File handling:
 - Re-read a file right before every write. Never rebuild it from an earlier or truncated read.
