@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "settings": {
+    "default_location": { "name": "", "lat": null, "lon": null },
+    "timezone": "auto",
+    "time_format": "24h",
+    "plan_source": { "type": "none", "path": "" },
+    "units": { "temp": "C", "wind": "mph" },
+    "default_session": "easy",
+    "personal_offset_c": 0,
+    "session_offsets_c": { "easy": 6, "long": 5, "speed": 9 },
+    "session_aliases": {
+      "easy": ["easy", "zone 2", "z2", "recovery", "base", "jog", "shakeout"],
+      "long": ["long", "long run", "lsr"],
+      "speed": ["tempo", "threshold", "intervals", "reps", "track", "fartlek", "hills", "progression", "vo2", "parkrun", "race"]
+    },
+    "never": [],
+    "wardrobe": []
+  },
+  "rules": [
+    {
+      "id": "gloves-below-8",
+      "enabled": true,
+      "when": { "feels_like_c": { "lt": 8 } },
+      "add": ["gloves"],
+      "note": "Example rule: edit or delete"
+    },
+    {
+      "id": "shorts-for-speed",
+      "enabled": false,
+      "when": { "session": { "in": ["speed"] }, "feels_like_c": { "gte": 0 } },
+      "set": { "bottom": "shorts" },
+      "note": "Example rule (disabled): shorts for speed work unless below freezing"
+    }
+  ]
+}

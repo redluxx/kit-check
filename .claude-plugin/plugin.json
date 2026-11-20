@@ -1,0 +1,10 @@
+{
+  "name": "kit-check",
+  "version": "0.1.0",
+  "description": "What to wear for your run: hourly forecast + session type (easy/long/speed) + your own rules, tuned from post-run feedback.",
+  "author": { "name": "redluxx" },
+  "homepage": "https://github.com/redluxx/kit-check",
+  "repository": "https://github.com/redluxx/kit-check",
+  "license": "MIT",
+  "keywords": ["running", "weather", "clothing", "training"]
+}
