@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "kit-check",
-      "source": { "source": "github", "repo": "redluxx/kit-check", "ref": "0.2.0" },
+      "source": { "source": "url", "url": "https://github.com/redluxx/kit-check.git", "ref": "v0.2.0" },
       "description": "What to wear for your run: hourly forecast + session type + your own rules, tuned from post-run feedback.",
       "version": "0.2.0",
       "category": "productivity"

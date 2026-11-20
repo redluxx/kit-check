@@ -16,7 +16,7 @@ A Claude skill that tells you what to wear for a run. It uses:
 ### Claude Code (recommended: rules and tuning persist)
 
 ```
-/plugin marketplace add YOUR-GITHUB-USERNAME/kit-check
+/plugin marketplace add redluxx/kit-check
 /plugin install kit-check@kit-check
 ```
 
@@ -26,7 +26,7 @@ Or install manually: copy `skills/kit-check/` to `~/.claude/skills/kit-check/`.
 
 ### Claude.ai / Claude desktop app
 
-1. Download `kit-check.zip` from the [latest release](https://github.com/YOUR-GITHUB-USERNAME/kit-check/releases/latest).
+1. Download `kit-check.zip` from the [latest release](https://github.com/redluxx/kit-check/releases/latest).
 2. Go to **Settings → Capabilities → Skills → Upload skill** and pick the zip.
 
 This needs a paid plan with code execution enabled. Rules and tuning only persist if the chat is linked to a folder on your computer through the desktop app. Otherwise the skill uses its built-in defaults.

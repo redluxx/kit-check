@@ -21,5 +21,5 @@ A Claude Code plugin/skill with no code, build, lint or test tooling. The whole 
 
 ## Releasing
 
-- `marketplace.json` pins the plugin to the git tag `<version>`, so installs get vetted releases, not `main`. When bumping the version, change `ref` too, merge, then tag that commit (admin only). Until the tag exists, installs fail.
+- `marketplace.json` pins the plugin to the git tag `v<version>`, so installs get vetted releases, not `main`. When bumping the version, change `ref` too, merge, then tag that commit (admin only). Until the tag exists, installs fail.
 - Enable the pre-commit hook after cloning: `git config core.hooksPath .githooks`. It runs `scripts/validate.py`, which also blocks personal data in the templates.

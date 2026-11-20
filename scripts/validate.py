@@ -28,9 +28,12 @@ for p in market.get("plugins", []):
     if p.get("name") != plugin.get("name"): err(f"marketplace plugin name {p.get('name')!r} != {plugin.get('name')!r}")
     src = p.get("source")
     # users must get a vetted release, never the moving main branch
-    if not (isinstance(src, dict) and src.get("source") == "github" and src.get("repo") == "redluxx/kit-check"
-            and src.get("ref") == v):
-        err(f"marketplace source must be a github source pinned to ref {v}, got {src!r}")
+    # github shorthand clones over ssh; the url form lets https checkouts work
+    ok_repo = (src.get("source") == "github" and src.get("repo") == "redluxx/kit-check") or \
+              (src.get("source") == "url" and src.get("url") == "https://github.com/redluxx/kit-check.git") \
+              if isinstance(src, dict) else False
+    if not (ok_repo and src.get("ref") == f"v{v}"):
+        err(f"marketplace source must be redluxx/kit-check (github or https url) pinned to ref v{v}, got {src!r}")
 for k in ("name", "description", "repository"):
     if not plugin.get(k): err(f"plugin.json: missing {k}")
 
